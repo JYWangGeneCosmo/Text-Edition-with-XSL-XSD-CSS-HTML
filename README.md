@@ -1,2 +1,2 @@
 # Text-Edition-with-XSL-XSD-CSS-HTML
-This is a exercise project in which a TED-Talk transcript is encoded with the focus on rhetoric devices and en-de translation. The output .html file displays the edited texts.
+This is an exercise project in which a TED-Talk transcript is encoded with the focus on rhetoric devices and en-de translation. TEI standard is applied in .xsd file. The output .html file displays the edited texts. It should be noted that this .html file is best to be opened in Browsers for Mac system, since some CSS elements used in this project is not supported by Windows system.
