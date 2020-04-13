@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" 
+    targetNamespace="http://www.tei-c.org/ns/1.0" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:nonTei="http://www.tei-c.org/ns/1.0/nonTei/MyProject/JingyingWang"> 
+    <xs:import namespace="http://www.tei-c.org/ns/1.0/nonTei/MyProject/JingyingWang" schemaLocation="nontei_TEDTalk_Rhetorics_JingyingWang.xsd"/> 
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd" />
+    <xs:element name="TEI">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:teiHeader"/>
+                <xs:element ref="tei:text"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="teiHeader">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:fileDesc"/>
+                <xs:element ref="tei:encodingDesc"/>
+                <xs:element ref="tei:profileDesc"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="fileDesc">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="titleStmt">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title" type="xs:string"/>
+                            <xs:element name="respStmt">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="name" type="xs:string"/>
+                                        <xs:element name="resp" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="publicationStmt">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="date" type="xs:date"/>
+                            <xs:element ref="tei:p"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="sourceDesc">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="scriptStmt">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="title" type="xs:string"/>
+                                        <xs:element name="speaker" type="xs:string"/>
+                                        <!-- In der TED Talk Website gibt es keine Info über den genauen Tag der Rede. -->
+                                        <xs:element name="date" type="xs:gYearMonth"></xs:element> 
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element> 
+                        </xs:sequence>
+                        <xs:attribute name="url" type="xs:anyURI"></xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="encodingDesc">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:p"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="profileDesc">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:p"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="p" type="xs:string"/>
+    <xs:element name="l" type="xs:string"/>
+    
+    <xs:element name="segmentation">
+        <xs:annotation>
+            <xs:documentation>
+                Die Segmentierung soll gleich wie die Segementierung des entsprechenden
+                Transkripts auf der TEDTalk Webseite sein.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="nonTei:sourceText"></xs:element>
+                <xs:element ref="nonTei:translation"></xs:element>
+            </xs:sequence>
+            <xs:attribute name="n" type="xs:positiveInteger"></xs:attribute>
+        </xs:complexType>
+    </xs:element>   
+                
+                   
+    <xs:element name="text">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="body">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="head" type="xs:string"/>
+                            <xs:element ref="tei:segmentation" minOccurs="1" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+   
+   
+    <xs:element name="fs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:f"/>
+            </xs:sequence>
+            <xs:attribute name="type" type = "xs:string" fixed = "rhetoric"/>
+            <xs:attribute ref="xml:id">
+                <xs:annotation>
+                    <xs:documentation>
+                        Für alle Sätze in &quot;sourceText&quot;, die rhetorische Mittel verwenden;
+                        alle Sätze in &quot;translation&quot; die rhetorische Mittel verwenden, aber deren
+                        entsprechende originale Sätze KEIN rhetorisches Mittel verwenden:
+                        weisen jedem solchen Satz eine einzigartige ID zu.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name ="ref" type="xs:IDREF">
+                <xs:annotation>
+                    <xs:documentation>
+                        Jeder übersetzte Satz (in &quot;translation&quot;) für den Satz, der ein rhetorisches Mittel verwendet,
+                        soll auf die ID des originale Satz referenziert werden (mit IDREF),
+                        um das Alignment dazwischen zu erstellen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="f">
+        <xs:complexType mixed="true">
+            <xs:attribute name="name" use="required">  <!-- Rhetorisches Mittel muss genau spezifziert werden-->
+                <xs:annotation>
+                    <xs:documentation>
+                        Für die Auszeichnung der rhetorischen Mittel werden Definitionen für 
+                        die folgenden aufgezählten Rhetorik (außer &quot;selfMockery&quot;) in Wikipedia 
+                        referenziert. Für &quot;selfMockery&quot; (Chleuasmos) wird die Definition für Chleuasmos 
+                        in https://ifioque.com/figures-of-speech/trope/chleuasmos
+                        order in &#187;A Dictionary of Literary Devices: Gradus, A-Z&#171; (Bernard Marie Dupriez, 1991) referenziert.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base = "xs:string">
+                        <xs:enumeration value = "metaphor"/>
+                        <xs:enumeration value="selfMockery"/>
+                        <xs:enumeration value = "parallelism"/>
+                        <xs:enumeration value = "irony"/>
+                        <xs:enumeration value="hyperbole"/>
+                        <xs:enumeration value="NONE">
+                            <xs:annotation>
+                                <xs:documentation> 
+                                    Falls das rhetorische Mittel nicht entsprechend in der Übersetzung
+                                    representiert, dann wird der übersetzte Satz auch als &quot;fs&quot; 
+                                    auf den originalen Satz referenzieren, aber dessen Attribut für den
+                                    Name des rhetorischen Mittel soll &quot;NONE&quot; sein.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    
+    
+
+</xs:schema>

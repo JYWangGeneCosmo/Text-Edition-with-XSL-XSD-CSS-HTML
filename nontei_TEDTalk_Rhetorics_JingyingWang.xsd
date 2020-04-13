@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" 
+  targetNamespace="http://www.tei-c.org/ns/1.0/nonTei/MyProject/JingyingWang" xmlns:nontei="http://www.tei-c.org/ns/1.0/nonTei/MyProject/JingyingWang" xmlns:tei="http://www.tei-c.org/ns/1.0">
+  <xs:import namespace="http://www.tei-c.org/ns/1.0" schemaLocation="Textauszeichnung_TEDTalk_Rhetorics_JingyingWang.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd" />
+ 
+  <!-- Diese Datei dient zur Definition der 2 non-Tei Elementen: 
+    "sourceText" für die originale Texte und "translation" für die Übersetzungen-->
+  
+  <xs:element name="sourceText">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="tei:l"/>
+        <xs:element ref="tei:fs"/>
+      </xs:choice>
+      <xs:attribute ref="xml:lang" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="translation">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="tei:l"/>
+        <xs:element ref="tei:fs"/>
+      </xs:choice>
+      <xs:attribute ref="xml:lang" use="required"/>
+    </xs:complexType>
+  </xs:element> 
+</xs:schema>
